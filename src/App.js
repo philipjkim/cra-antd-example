@@ -1,77 +1,73 @@
 import React from 'react';
 import {
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-  Switch,
-  Slider,
-  Button,
-  Rate,
   Typography,
   Space,
   Divider,
+  Table,
 } from 'antd';
 import './App.less';
 
-const { Option } = Select;
 const { Title } = Typography;
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    sorter: (a, b) => a.name.localeCompare(b.name)
+  },
+  {
+    title: 'Pos.',
+    dataIndex: 'position',
+    sorter: (a, b) => a.position.localeCompare(b.position)
+  },
+  {
+    title: 'Pts.',
+    dataIndex: 'points',
+    sorter: (a, b) => a.points - b.points
+  },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'LeBron James',
+    position: 'SF',
+    points: 25.1,
+  },
+  {
+    key: '2',
+    name: 'Russell Westbrook',
+    position: 'PG',
+    points: 20.0,
+  },
+  {
+    key: '3',
+    name: 'Anthony Davis',
+    position: 'PF',
+    points: 24.5,
+  },
+]
+
+const onChange = (pagination, filters, sorter, extra) => {
+  console.log('params', pagination, filters, sorter, extra);
+}
 
 const App = () => (
   <>
     <section style={{ textAlign: 'center', marginTop: 48, marginBottom: 40 }}>
       <Space align="start">
         <img
-          style={{width: 40, height: 40 }}
+          style={{ width: 40, height: 40 }}
           src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
           alt="Ant Design"
         />
         <Title level={2} style={{ marginBottom: 0 }}>
-          Ant Design
+          Example - Player List
         </Title>
       </Space>
     </section>
     <Divider style={{ marginBottom: 60 }}>Form</Divider>
-    <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-      <Form.Item label="数字输入框">
-        <InputNumber min={1} max={10} defaultValue={3} />
-        <span className="ant-form-text"> 台机器</span>
-        <a href="https://ant.design">链接文字</a>
-      </Form.Item>
-      <Form.Item label="开关">
-        <Switch defaultChecked />
-      </Form.Item>
-      <Form.Item label="滑动输入条">
-        <Slider defaultValue={70} />
-      </Form.Item>
-      <Form.Item label="选择器">
-        <Select defaultValue="lucy" style={{ width: 192 }}>
-          <Option value="jack">jack</Option>
-          <Option value="lucy">lucy</Option>
-          <Option value="disabled" disabled>disabled</Option>
-          <Option value="yiminghe">yiminghe</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="日期选择框">
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="日期范围选择框">
-        <DatePicker.RangePicker />
-      </Form.Item>
-      <Form.Item label="评分">
-        <Rate defaultValue={5} />
-      </Form.Item>
-      <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button>
-            Cancel
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+    <Table columns={columns} dataSource={data} onChange={onChange} />
   </>
 );
 
